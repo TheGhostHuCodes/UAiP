@@ -2,6 +2,10 @@ import asyncio
 from asyncio import StreamReader, StreamWriter
 
 
+async def send_event(msg: str) -> None:
+    await asyncio.sleep(1)
+
+
 async def echo(reader: StreamReader, writer: StreamWriter):
     print("New connection.")
     try:
@@ -10,7 +14,9 @@ async def echo(reader: StreamReader, writer: StreamWriter):
             await writer.drain()
         print("Leaving connection.")
     except asyncio.CancelledError:
-        print("Connection dropped!")
+        msg = "Connection dropped!"
+        print(msg)
+        asyncio.create_task(send_event(msg))
 
 
 async def main(host="127.0.0.1", port=8888):
