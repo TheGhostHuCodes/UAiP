@@ -1,14 +1,18 @@
 import asyncio
+from concurrent.futures import ThreadPoolExecutor as Executor
 import time
 
 
 async def main():
     loop = asyncio.get_running_loop()
-    loop.run_in_executor(None, blocking)
+    future = loop.run_in_executor(None, blocking)
 
-    print(f"{time.ctime()} Hello!")
-    await asyncio.sleep(1.0)
-    print(f"{time.ctime()} Goodbye!")
+    try:
+        print(f"{time.ctime()} Hello!")
+        await asyncio.sleep(1.0)
+        print(f"{time.ctime()} Goodbye!")
+    finally:
+        await future
 
 
 def blocking():
@@ -17,4 +21,7 @@ def blocking():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Bye!")
