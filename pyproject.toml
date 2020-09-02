@@ -7,6 +7,7 @@ authors = ["Yung-Jin (Joey) Hu <yungjinhu@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 attrs = "^19.3.0"
+twisted = "^20.3.0"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
